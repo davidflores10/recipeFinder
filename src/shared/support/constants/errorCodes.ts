@@ -1,0 +1,7 @@
+export enum ErrorCodes {
+  FORBIDDEN = 403,
+  UNAUTHORIZED = 401,
+  RECURSE_ERROR = 500,
+  NOT_FOUND = 404,
+  UNDEFINED_ERROR = -1,
+}
