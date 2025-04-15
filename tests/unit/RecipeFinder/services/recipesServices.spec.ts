@@ -36,8 +36,6 @@ describe("RecipeFinder/services/recipesService", () => {
     const mockError = new Error("Failed to fetch");
     const recipesStore = useRecipesStore();
     recipesRepository.getRecipes = vi.fn().mockRejectedValue(mockError);
-
-    // Initialize store with some data to ensure it's reset on error
     recipesStore.recipes = [
       { idMeal: "1", strMeal: "Initial Recipe" },
     ] as Recipe[];
@@ -60,7 +58,8 @@ describe("RecipeFinder/services/recipesService", () => {
     recipeService.getRecipesFromLocalStorage();
     const recipesStore = useRecipesStore();
 
-    expect(recipesStore.recipes).toStrictEqual(mockRecipes);
+    const storedRecipes = JSON.parse(localStorage.getItem("recipes") ?? "[]");
+    expect(recipesStore.recipes).toStrictEqual(storedRecipes);
   });
 
   it("should return recipes from store", () => {
@@ -88,6 +87,18 @@ describe("RecipeFinder/services/recipesService", () => {
 
     expect(recipesStore.recipes).toStrictEqual([]);
     expect(removeItemSpy).toHaveBeenCalledWith("recipes");
+  });
+
+  it("should set recipes directly in store", () => {
+    const mockRecipes = [
+      { idMeal: "1", strMeal: "Test Recipe" },
+      { idMeal: "2", strMeal: "Another Recipe" },
+    ] as Recipe[];
+    const recipesStore = useRecipesStore();
+    
+    recipesStore.setRecipes(mockRecipes);
+    
+    expect(recipesStore.recipes).toStrictEqual(mockRecipes);
   });
 
   describe("getRecipeById", () => {
@@ -128,6 +139,68 @@ describe("RecipeFinder/services/recipesService", () => {
       const result = recipeService.getRecipeById(2);
 
       expect(result).toBeUndefined();
+    });
+  });
+
+  describe("Favorites functionality", () => {
+    const mockRecipe = {
+      idMeal: "1",
+      strMeal: "Test Recipe",
+    } as Recipe;
+
+    beforeEach(() => {
+      useRecipesStore().$reset();
+    });
+
+    it("should add recipe to favorites", () => {
+      const store = useRecipesStore();
+      vi.spyOn(store, "isInFavorites").mockReturnValue(false);
+      vi.spyOn(store, "addToFavorites");
+
+      recipeService.addOrRemoveFavorite(mockRecipe);
+
+      expect(store.isInFavorites).toHaveBeenCalledWith(mockRecipe);
+      expect(store.addToFavorites).toHaveBeenCalledWith(mockRecipe);
+    });
+
+    it("should remove recipe from favorites", () => {
+      const store = useRecipesStore();
+      vi.spyOn(store, "isInFavorites").mockReturnValue(true);
+      vi.spyOn(store, "removeFromFavorites");
+
+      recipeService.addOrRemoveFavorite(mockRecipe);
+
+      expect(store.isInFavorites).toHaveBeenCalledWith(mockRecipe);
+      expect(store.removeFromFavorites).toHaveBeenCalledWith(mockRecipe);
+    });
+
+    it("should check if recipe is in favorites", () => {
+      const store = useRecipesStore();
+      vi.spyOn(store, "isInFavorites").mockReturnValue(true);
+
+      const result = recipeService.isInFavorites(mockRecipe);
+
+      expect(store.isInFavorites).toHaveBeenCalledWith(mockRecipe);
+      expect(result).toBe(true);
+    });
+
+    it("should reflect changes in localStorage when adding to favorites", () => {
+      recipeService.addOrRemoveFavorite(mockRecipe);
+
+      const storedFavorites = JSON.parse(
+        localStorage.getItem("favorites") ?? "[]"
+      );
+      expect(storedFavorites).toContainEqual(mockRecipe);
+    });
+
+    it("should reflect changes in localStorage when removing from favorites", () => {
+      recipeService.addOrRemoveFavorite(mockRecipe);
+      recipeService.addOrRemoveFavorite(mockRecipe);
+
+      const storedFavorites = JSON.parse(
+        localStorage.getItem("favorites") ?? "[]"
+      );
+      expect(storedFavorites).not.toContainEqual(mockRecipe);
     });
   });
 });

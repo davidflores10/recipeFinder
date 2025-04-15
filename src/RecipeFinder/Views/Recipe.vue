@@ -59,12 +59,12 @@
       <span class="text-slate-600 text-3xl font-bold block">Video:</span>
 
       <iframe
-        class="w-[420px] h-[315px] md:w-[560px] md:h-[315px] rounded-lg lg:w-[800px] lg:h-[450px]"
+        class="w-[300px] h-[240px] sm:w-[420px] sm:h-[315px] md:w-[560px] md:h-[315px] rounded-lg lg:w-[800px] lg:h-[450px]"
         :src="recipe.strYoutube.replace('watch?v=', 'embed/')"
       >
       </iframe>
     </div>
-    <div class="flex justify-center px-5">
+    <div class="flex justify-center px-5 break-all">
       <span
         class="block pt-16 mb-2 text-slate-600 scroll-m-20 text-2xl font-extrabold tracking-tight text-2xl sm:pl-10"
         >Full recipe:

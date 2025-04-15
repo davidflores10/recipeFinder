@@ -39,4 +39,18 @@ export default {
     );
     return recipe;
   },
+
+  addOrRemoveFavorite(recipe: Recipe) {
+    const store = useRecipesStore();
+    if (!store.isInFavorites(recipe)) {
+      store.addToFavorites(recipe);
+      return;
+    }
+    store.removeFromFavorites(recipe);
+  },
+
+  isInFavorites(recipe: Recipe) {
+    const store = useRecipesStore();
+    return store.isInFavorites(recipe);
+  },
 };
