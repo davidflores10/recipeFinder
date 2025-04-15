@@ -43,7 +43,6 @@ const recipeName = ref("");
 
 const searchRecipe = async () => {
   try {
-    console.log(recipeName.value);
     await recipeService.getRecipes(recipeName.value);
   } catch (error) {
     console.error("Error fetching recipes:", error);

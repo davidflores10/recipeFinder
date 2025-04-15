@@ -8,7 +8,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "npm run test:unit:coverage && rm -r coverage/tmp/",
+    "test": "npm run test:unit:coverage",
     "test:unit": "vitest --environment jsdom",
     "test:unit:watch": "vitest run --environment jsdom",
     "test:unit:coverage": "vitest run --environment jsdom --coverage"

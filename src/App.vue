@@ -1,12 +1,10 @@
 <template>
   <div id="app" class="min-h-screen bg-gray-100">
-    <Home msg="Welcome to Your Vue.js App" />
+    <RouterView />
   </div>
 </template>
 
-<script setup lang="ts">
-import Home from "@/RecipeFinder/Views/Home.vue";
-</script>
+<script setup lang="ts"></script>
 
 <style>
 #app {
