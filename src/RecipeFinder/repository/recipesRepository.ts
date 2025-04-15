@@ -11,7 +11,7 @@ const getRecipes = async (recipeName: string): Promise<Recipe[]> => {
     const response = await http.get(
       `${apiEndpoints.searchRecipe}?s=${recipeName}`
     );
-    return response.data;
+    return response.data?.meals;
   } catch (error) {
     const errorAxios = error as AxiosError;
     throw getExceptionFromHttpError(

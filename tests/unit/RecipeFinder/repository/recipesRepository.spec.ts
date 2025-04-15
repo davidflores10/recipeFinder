@@ -19,13 +19,13 @@ describe("RecipeFinder/repository/recipesRepository", () => {
     expect(http.get).toHaveBeenCalledWith(
       `${apiEndpoints.searchRecipe}?s=${RECIPE_NAME}`
     );
-    expect(result).toBe(mockResponse.data);
+    expect(result).toBe(mockResponse.data.meals);
   });
 
   it("should throw exception when request fails", async () => {
     const RECIPE_NAME = "chocolate";
     const mockError: Partial<AxiosError> = {
-      response: { status: 404 } as any
+      response: { status: 404 } as any,
     };
     http.get = vi.fn().mockRejectedValue(mockError);
 
