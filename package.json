@@ -2,7 +2,7 @@
   "name": "vue-vite-app",
   "version": "1.0.0",
   "type": "module",
-  "description": "A Vue.js project using Vite as the build tool.",
+  "description": "A Recipe finder Vue.js application using Vite",
   "main": "src/main.ts",
   "scripts": {
     "dev": "vite",
