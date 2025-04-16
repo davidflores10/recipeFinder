@@ -29,6 +29,7 @@
           Search
         </button>
         <font-awesome-icon
+          v-if="recipeService.getFavourites().length"
           :icon="['fas', 'heart']"
           class="absolute h-12 ml-4 text-[#F6415E] cursor-pointer"
           title="Go to favourites"
