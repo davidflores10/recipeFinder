@@ -21,6 +21,7 @@ export default defineConfig({
         "**/models/**",
         "**/src/shared/assets/**",
         "**/src/shared/router/**",
+        "**/src/main.ts",
       ],
       all: true,
     },

@@ -95,9 +95,9 @@ describe("RecipeFinder/services/recipesService", () => {
       { idMeal: "2", strMeal: "Another Recipe" },
     ] as Recipe[];
     const recipesStore = useRecipesStore();
-    
+
     recipesStore.setRecipes(mockRecipes);
-    
+
     expect(recipesStore.recipes).toStrictEqual(mockRecipes);
   });
 
@@ -201,6 +201,18 @@ describe("RecipeFinder/services/recipesService", () => {
         localStorage.getItem("favorites") ?? "[]"
       );
       expect(storedFavorites).not.toContainEqual(mockRecipe);
+    });
+
+    it("should return favourite recipes from store", () => {
+      const mockRecipes = [
+        { idMeal: "1", strMeal: "Chocolate Cake" },
+      ] as Recipe[];
+      const recipesStore = useRecipesStore();
+      recipesStore.favorites = mockRecipes;
+
+      const result = recipeService.getFavourites();
+
+      expect(result).toStrictEqual(mockRecipes);
     });
   });
 });

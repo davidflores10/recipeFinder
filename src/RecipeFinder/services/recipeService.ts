@@ -53,4 +53,9 @@ export default {
     const store = useRecipesStore();
     return store.isInFavorites(recipe);
   },
+
+  getFavourites() {
+    const store = useRecipesStore();
+    return store.favorites;
+  },
 };
