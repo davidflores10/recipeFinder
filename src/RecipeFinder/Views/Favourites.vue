@@ -2,4 +2,6 @@
 import FavouritesList from "@/shared/components/FavouritesList.vue";
 </script>
 
-<template><FavouritesList></FavouritesList></template>
+<template>
+  <div class="md:h-full"><FavouritesList></FavouritesList></div>
+</template>

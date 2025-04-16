@@ -7,13 +7,13 @@
     />
     <div class="w-full min-w-[200px] relative mt-4 flex justify-center">
       <label
-        class="block mb-2 text-sm text-slate-600 scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl"
+        class="block mb-2 text-slate-600 scroll-m-20 text-2xl md:text-4xl font-extrabold tracking-tight lg:text-5xl"
       >
         ¡Your next chef's kiss dish!
       </label>
     </div>
     <div class="w-full max-w-sm min-w-[200px] relative mt-4">
-      <div class="relative">
+      <div class="relative w-[290px] sm:w-[315px] md:w-full pl-4">
         <input
           v-model="recipeName"
           type="email"
