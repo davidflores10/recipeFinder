@@ -1,25 +1,47 @@
 <template>
-  <div
-    class="flex flex-col justify-center bg-gray-100 flex w-full"
-    v-if="recipe"
-  >
-    <div
-      class="md:pl-16 md:pt-16 grid grid-cols-1 md:grid-cols-2 md:grid-cols-[40%_60%]"
-    >
+  <div class="flex flex-col justify-center bg-gray-100 w-full" v-if="recipe">
+    <div class="md:pl-16 md:pt-16 grid grid-cols-1 md:grid-cols-[40%_60%]">
       <div class="flex justify-center items-center">
         <img class="rounded-t-lg" :src="recipe.strMealThumb" alt="" />
       </div>
       <div class="flex flex-col justify-center items-center md:items-start">
         <h1
-          class="block mb-2 text-sm text-slate-600 scroll-m-20 text-4xl font-extrabold tracking-tight text-5xl sm:pl-10"
+          class="block mb-2 text-slate-600 scroll-m-20 text-4xl font-extrabold tracking-tight sm:pl-10"
         >
           {{ recipe.strMeal }}
         </h1>
         <h2
-          class="block mb-2 text-sm text-slate-600 scroll-m-20 text-4xl font-extrabold tracking-tight text-2xl sm:pl-10"
+          class="block mb-2 text-slate-600 scroll-m-20 text-4xl font-extrabold tracking-tight sm:pl-10"
         >
           {{ recipe.strCategory }} - {{ recipe.strArea }}
         </h2>
+
+        <div
+          class="flex justify-center items-center md:items-start md:pl-10 pt-5"
+        >
+          <span
+            v-if="isFavorite"
+            class="text-[#F6415E] text-2xl cursor-pointer"
+            @click="addToFavorites($event, recipe)"
+          >
+            In your favourites
+            <font-awesome-icon
+              :icon="['fas', 'heart']"
+              class="h-8 text-[#F6415E]"
+            />
+          </span>
+
+          <span
+            v-else
+            class="text-[#F6415E] text-2xl cursor-pointer"
+            @click="addToFavorites($event, recipe)"
+          >
+            Add to your favourites
+            <font-awesome-icon
+              :icon="['far', 'heart']"
+              class="h-8 text-[#F6415E]"
+          /></span>
+        </div>
       </div>
     </div>
     <div
@@ -79,18 +101,22 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, computed } from "vue";
 import recipeService from "@/RecipeFinder/services/recipeService";
 import type { Recipe } from "@/RecipeFinder/models/Recipe";
 
 const recipe = ref<Recipe | undefined>();
 const ingredientsAndMeasures = ref<string[]>([]);
+const isFavorite = computed(() =>
+  recipe.value ? recipeService.isInFavorites(recipe.value) : false
+);
 
 const props = defineProps<{
   id: number;
 }>();
 
 onMounted(() => {
+  window.scrollTo(0, 0);
   recipe.value = recipeService.getRecipeById(props.id);
 
   for (let i = 1; i <= 20; i++) {
@@ -102,4 +128,9 @@ onMounted(() => {
     }
   }
 });
+
+const addToFavorites = (event: Event, recipe: Recipe) => {
+  event.stopPropagation();
+  recipeService.addOrRemoveFavorite(recipe);
+};
 </script>
