@@ -90,6 +90,10 @@ This will generate the production-ready files in the `dist` directory.
 - Pinia (Store management)
 - Fontawesome
 
+## API
+
+The api for obtaining the data is https://www.themealdb.com
+
 ## Links
 
 The application is live at: https://recipefinderdf.netlify.app/
