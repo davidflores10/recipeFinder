@@ -21,7 +21,7 @@
 
       <a>
         <img
-          class="rounded-t-lg max-w-[320px]"
+          class="rounded-t-lg max-w-[300px] 2xl:max-w-[320px]"
           :src="recipe.strMealThumb"
           alt=""
         />
@@ -47,7 +47,7 @@ import { Recipe } from "@/RecipeFinder/models/Recipe";
 import { useRouter } from "vue-router";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import recipeService from "@/RecipeFinder/services/recipeService";
-import { computed } from 'vue';
+import { computed } from "vue";
 
 const router = useRouter();
 const props = defineProps<{
